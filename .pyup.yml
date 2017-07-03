@@ -1,5 +1,5 @@
 # https://pyup.io/docs/configuration/
 
 branch: develop
-schedule: every week
+schedule: every day
 search: True
