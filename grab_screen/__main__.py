@@ -1,10 +1,10 @@
 import click
 
-from . import __version__
-from .storages import get_storage
-from .screen import grab_image
-from .conf import config as app_config
-from .utils import open_url, copy_to_clipboard
+from grab_screen import __version__
+from grab_screen.storages import get_storage
+from grab_screen.screen import grab_image
+from grab_screen.conf import config as app_config
+from grab_screen.utils import open_url, copy_to_clipboard
 
 
 @click.group("cloudapp-screenshots")
