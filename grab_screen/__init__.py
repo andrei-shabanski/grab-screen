@@ -1,4 +1,4 @@
-from .conf import config
+from .conf import config  # noqa
 
 __all__ = ['__version__']
 
