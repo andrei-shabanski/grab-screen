@@ -16,8 +16,8 @@ def cli():
 
 @click.command(help="Set options.")
 @click.help_option('-h', '--help')
-@click.option('-k', '--key', prompt=True)
-@click.option('-v', '--value', prompt=True)
+@click.argument('key')
+@click.argument('value')
 def config(key, value):
     key = key.replace('.', '_').upper()
     setattr(app_config, key, value)
