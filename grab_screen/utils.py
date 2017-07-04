@@ -1,6 +1,6 @@
 import logging
-import pyperclip
 import webbrowser
+import pyperclip
 
 logger = logging.getLogger(__name__)
 

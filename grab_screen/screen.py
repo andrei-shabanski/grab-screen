@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def grab_image():
-    tmp_file = tempfile.mktemp(prefix='screenshot-', suffix='.png')
+    tmp_file = tempfile.mkstemp(prefix='screenshot-', suffix='.png')[0]
 
     _gnome_screenshot(tmp_file)
 
