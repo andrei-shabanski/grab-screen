@@ -5,7 +5,7 @@ from shutil import copyfile
 
 
 class Config(object):
-    _path = os.path.join(os.path.expanduser('~'), '.config', 'cloudapp-screenshots', 'config.ini')
+    _path = os.path.join(os.path.expanduser('~'), '.config', 'grab-screen', 'config.ini')
 
     _auto_save = True
 
@@ -37,11 +37,32 @@ class Config(object):
 
     def load(self):
         if not os.path.exists(self._path):
-            self.clear()
+            self.reset()
 
         self._config.read(self._path)
 
-    def load_logging(self):
+        self._load_logger()
+
+    def save(self):
+        self._create_path()
+
+        with open(self._path, 'w') as config_file:
+            self._config.write(config_file)
+
+    def reset(self):
+        self._create_path()
+
+        default_config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.ini'))
+        copyfile(default_config_path, self._path)
+
+        self.load()
+
+    def _create_path(self):
+        directory = os.path.dirname(self._path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+    def _load_logger(self):
         logging.config.dictConfig({
             'version': 1,
             'formatters': {
@@ -58,23 +79,11 @@ class Config(object):
             },
             'loggers': {
                 'grab_screen': {
-                    'level': self.LOGGER_LEVEL,
+                    'level': self.LOGGER_LEVEL.upper(),
                     'handlers': ['console'],
                 },
             }
         })
-
-    def save(self):
-        directory = os.path.dirname(self._path)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-        with open(self._path, 'w') as config_file:
-            self._config.write(config_file)
-
-    def clear(self):
-        default_config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.ini'))
-        copyfile(default_config_path, self._path)
 
     def _get_value(self, key):
         key = key.lower()
