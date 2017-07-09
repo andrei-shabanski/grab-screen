@@ -5,9 +5,9 @@ import pyperclip
 logger = logging.getLogger(__name__)
 
 
-def open_url(url):
-    logger.info('Opening %s in the browser.', url)
-    webbrowser.open(url)
+def open_path(path):
+    logger.info('Opening %s.', path)
+    webbrowser.open(path)
 
 
 def copy_to_clipboard(text):

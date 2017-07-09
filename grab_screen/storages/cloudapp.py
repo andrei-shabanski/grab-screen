@@ -3,15 +3,15 @@ import os
 import requests
 from requests.auth import HTTPDigestAuth
 
-from .base import BaseStorage
+from .base import BaseStorage, File
 from ..conf import config
+from ..exceptions import StorageError
 
 logger = logging.getLogger(__name__)
 
 
 class Storage(BaseStorage):
-    base_url = 'https://my.cl.ly/'
-    version = 'v3'
+    base_url = 'https://my.cl.ly/v3'
 
     def __init__(self, username=config.CLOUDAPP_USERNAME, password=config.CLOUDAPP_PASSWORD):
         self._auth = HTTPDigestAuth(username, password)
@@ -20,7 +20,12 @@ class Storage(BaseStorage):
             'Accept': 'application/json',
         }
 
-    def upload_file(self, path):
+    def upload_image(self, path):
+        file_detail = self._upload_file(path)
+
+        return File(File.IMAGE, file_detail['share_url'])
+
+    def _upload_file(self, path):
         logger.info('Uploading file %s', path)
         filename = os.path.basename(path)
 
@@ -43,7 +48,16 @@ class Storage(BaseStorage):
 
         if not response.ok:
             logger.debug('Request to %s failed: status=%s body=%s', url, response.status_code, response.text)
-            raise Exception('Oops')
+
+            if response.status_code >= 500:
+                error_msg = "CloudApp broken :("
+            elif response.status_code == 400:
+                error_msg = "CloudApp doesn't want to accept our request. Sorry :("
+            elif response.status_code in (401, 403):
+                error_msg = "Invalid credentials for CloudApp."
+            else:
+                error_msg = None
+            raise StorageError(error_msg)
 
         return response.json()
 
@@ -51,4 +65,4 @@ class Storage(BaseStorage):
         if path.startswith('/'):
             path = path[1:]
 
-        return os.path.join(self.base_url, self.version, path)
+        return os.path.join(self.base_url, path)
