@@ -24,4 +24,4 @@ def _gnome_screenshot(file_path):
         raise ScreenError("Oops, can't take screenshot.")
 
     if not os.path.getsize(file_path):
-        raise ScreenError("Abort.")
+        raise ScreenError("Aborted!")

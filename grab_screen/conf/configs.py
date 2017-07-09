@@ -1,7 +1,12 @@
 import logging.config
 import os
 import ConfigParser
+from collections import namedtuple
 from shutil import copyfile
+
+logger = logging.getLogger(__name__)
+
+Option = namedtuple('Option', ('key', 'section', 'option', 'value'))
 
 
 class Config(object):
@@ -16,6 +21,15 @@ class Config(object):
 
     def __init__(self):
         self._config = ConfigParser.ConfigParser()
+
+    def __iter__(self):
+        for section in self._sections:
+            if not self._config.has_section(section):
+                continue
+
+            for option, value in self._config.items(section):
+                key = '{}_{}'.format(section, option).upper()
+                yield Option(key, section, option, value)
 
     def __getattribute__(self, key):
         if key.isupper():
@@ -49,13 +63,14 @@ class Config(object):
         with open(self._path, 'w') as config_file:
             self._config.write(config_file)
 
-    def reset(self):
+    def reset(self, reload=True):
         self._create_path()
 
         default_config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.ini'))
         copyfile(default_config_path, self._path)
 
-        self.load()
+        if reload:
+            self.load()
 
     def _create_path(self):
         directory = os.path.dirname(self._path)
@@ -63,6 +78,11 @@ class Config(object):
             os.makedirs(directory)
 
     def _load_logger(self):
+        level = self.LOGGER_LEVEL.upper()
+        if level not in logging._levelNames.keys():
+            logger.warning("Invalid logger level '%s'", level)
+            level = 'INFO'
+
         logging.config.dictConfig({
             'version': 1,
             'formatters': {

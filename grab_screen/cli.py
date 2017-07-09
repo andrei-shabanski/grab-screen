@@ -9,14 +9,17 @@ from .storages import get_storage
 from .utils import open_path, copy_to_clipboard
 from .version import __version__
 
-echo_error = lambda text: click.echo(click.style(text, fg='red'))
+echo_error = lambda text: click.echo(click.style(text, fg='red'), err=True)
 
 
-def prompt(ctx, param, value):
+def prompt_config_value(ctx, param, value):
     if value is not None:
         return value
 
-    return click.prompt('Value', hide_input=ctx.params['secret'], show_default=False)
+    if ctx.params['unset']:
+        return None
+
+    return click.prompt('Value', hide_input=True)
 
 
 @click.group("cloudapp-screenshots")
@@ -26,18 +29,18 @@ def main():
     pass
 
 
-@main.command(help="Set options.")
+@main.group('config', help="Get and set options.")
 @click.help_option('-h', '--help')
-@click.argument('key')
-@click.argument('value', required=False, callback=prompt)
-@click.option('-s', '--secret', is_flag=True, default=False, is_eager=True, help="Prompt a secret value.")
-@click.option('--unset', is_flag=True, default=False, help="Remove an option.")
-@click.option('--reset', is_flag=True, default=False, help="Remove all options.")
-def config(key, value, secret, unset, reset):
-    if reset:
-        app_config.reset()
-        return
+def config_group():
+    pass
 
+
+@config_group.command('set', help="Set the option.")
+@click.argument('key')
+@click.argument('value', required=False, callback=prompt_config_value)
+@click.help_option('-h', '--help')
+@click.option('-U', '--unset', is_flag=True, default=False, is_eager=True, help="Remove the option.")
+def config_set(key, value, secret, unset):
     key = key.replace('.', '_').upper()
 
     if unset:
@@ -46,12 +49,40 @@ def config(key, value, secret, unset, reset):
         setattr(app_config, key, value)
 
 
-@main.command(help="Make a screenshot and upload to CloudApp.")
+@config_group.command('reset', help="Remove all options.")
+@click.help_option('-h', '--help')
+@click.option('-f', '--force', is_flag=True, default=False)
+def config_reset(force):
+    if not force and not click.confirm("Are you sure?"):
+        echo_error('Aborted!')
+        sys.exit(1)
+
+    app_config.reset(reload=False)
+
+
+@config_group.command('list', help="Show options.")
+@click.help_option('-h', '--help')
+def config_list():
+    lines = []
+
+    prev_option = None
+    for option in app_config:
+        if not prev_option or prev_option.section != option.section:
+            lines.append('[{}]'.format(option.section))
+        lines.append("\t{} = '{}'".format(option.option, option.value))
+
+        prev_option = option
+
+    output = '\n'.join(lines)
+    click.echo_via_pager(output)
+
+
+@main.command('image', help="Make a screenshot and upload to CloudApp.")
 @click.help_option('-h', '--help')
 @click.option('-b', '--browser', is_flag=True, help="Open a uploaded file in the browser.")
 @click.option('-c', '--clipboard', is_flag=True, help="Copy a url to clipboard.")
 @click.option('-s', '--storage', help="Choose a storage.")
-def image(browser, clipboard, storage):
+def take_image(browser, clipboard, storage):
     try:
         tmp_file_path = grab_image()
     except ScreenError as e:
