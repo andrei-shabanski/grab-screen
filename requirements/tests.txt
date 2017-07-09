@@ -1,0 +1,4 @@
+-r main.txt
+
+pytest>=3,<4
+tox>=2.7,<3
