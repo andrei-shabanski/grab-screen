@@ -83,21 +83,16 @@ def config_list():
 @click.option('-c', '--clipboard', is_flag=True, help="Copy a url to clipboard.")
 @click.option('-s', '--storage', help="Choose a storage.")
 def make_image(browser, clipboard, storage):
-    try:
-        tmp_file_path = take_image()
-    except ScreenError as e:
-        echo_error(e.message)
-        sys.exit(1)
 
     try:
         storage = get_storage(storage)
-        file = storage.upload_image(tmp_file_path)
-    except StorageError as e:
+        file_detail = take_image(storage)
+    except (ScreenError, StorageError) as e:
         echo_error(e.message)
         sys.exit(1)
 
     if browser:
-        open_path(file.path)
+        open_path(file_detail.path)
 
     if clipboard:
-        copy_to_clipboard(file.path)
+        copy_to_clipboard(file_detail.path)
