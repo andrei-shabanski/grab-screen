@@ -4,7 +4,7 @@ import click
 
 from .conf import config as app_config
 from .exceptions import StorageError, ScreenError
-from .screen import grab_image
+from .screen import take_image
 from .storages import get_storage
 from .utils import open_path, copy_to_clipboard
 from .version import __version__
@@ -77,14 +77,14 @@ def config_list():
     click.echo_via_pager(output)
 
 
-@main.command('image', help="Make a screenshot and upload to CloudApp.")
+@main.command('image', help="Make a screenshot and upload to a storage.")
 @click.help_option('-h', '--help')
 @click.option('-b', '--browser', is_flag=True, help="Open a uploaded file in the browser.")
 @click.option('-c', '--clipboard', is_flag=True, help="Copy a url to clipboard.")
 @click.option('-s', '--storage', help="Choose a storage.")
-def take_image(browser, clipboard, storage):
+def make_image(browser, clipboard, storage):
     try:
-        tmp_file_path = grab_image()
+        tmp_file_path = take_image()
     except ScreenError as e:
         echo_error(e.message)
         sys.exit(1)
