@@ -1,4 +1,5 @@
 click==6.7
 pyperclip==1.5.27
+pyscreenshot==0.4.2
 requests==2.18.1
 six==1.10.0
