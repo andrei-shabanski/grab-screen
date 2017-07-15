@@ -40,7 +40,7 @@ def config_group():
 @click.argument('value', required=False, callback=prompt_config_value)
 @click.help_option('-h', '--help')
 @click.option('-U', '--unset', is_flag=True, default=False, is_eager=True, help="Remove the option.")
-def config_set(key, value, secret, unset):
+def config_set(key, value, unset):
     key = key.replace('.', '_').upper()
 
     if unset:
