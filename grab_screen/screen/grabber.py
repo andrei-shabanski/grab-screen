@@ -6,14 +6,14 @@ from ..exceptions import ScreenError
 
 logger = logging.getLogger(__name__)
 
-MIN_AREA_SIZE = 5
+MIN_AREA_SIZE = 3
 
 
 class Grabber(Tk):
-    WINDOW_COLOR = 'white'
-    WINDOW_ALPHA = 0.1
+    WINDOW_COLOR = '#ffffff'
+    WINDOW_ALPHA = 0.2
 
-    RECTANGLE_COLOR = 'red'
+    RECTANGLE_COLOR = '#000000'
 
     @classmethod
     def run(cls):
@@ -45,17 +45,9 @@ class Grabber(Tk):
         self.initialize_geometry()
         self.initialize_controls()
 
-    # @property
-    # def screen_resolution(self):
-    #     return self.winfo_screenwidth(), self.winfo_screenheight()
-
     def initialize_geometry(self):
-        # self.geometry('{}x{}'.format(*self.screen_resolution))
-        # self.overrideredirect(True)
-        # self.focus_set()
-
         self.wait_visibility()
-        # self.attributes('-topmost', True)
+        self.attributes('-topmost', True)
         self.attributes('-fullscreen', True)
         self.attributes('-alpha', self.WINDOW_ALPHA)
 
@@ -95,7 +87,7 @@ class Grabber(Tk):
         self._on_selected(self._coords)
 
     def exit(self, event=None):
-        # self.iconify()
+        self.iconify()
         self.destroy()
 
 
