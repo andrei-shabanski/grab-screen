@@ -97,6 +97,7 @@ def grab_area():
     if not coords:
         raise ScreenError("Aborted!")
 
+    coords = tuple(map(int, coords))
     x1, x2 = sorted(coords[0::2])
     y1, y2 = sorted(coords[1::2])
     coords = (x1, y1, x2, y2)
@@ -107,7 +108,3 @@ def grab_area():
 
     logger.debug("Selected area %s.", coords)
     return coords
-
-if __name__ == '__main__':
-    coords = grab_area()
-    print(coords)
