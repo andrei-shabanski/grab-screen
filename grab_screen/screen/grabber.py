@@ -6,8 +6,6 @@ from ..exceptions import ScreenError
 
 logger = logging.getLogger(__name__)
 
-MIN_AREA_SIZE = 3
-
 
 class Grabber(Tk):
     WINDOW_COLOR = '#ffffff'
@@ -92,7 +90,7 @@ class Grabber(Tk):
 
 
 def grab_area():
-    logger.info("Grabbing an area.")
+    logger.info("Selecting an area.")
     coords = Grabber.run()
     if not coords:
         raise ScreenError("Aborted!")
@@ -101,10 +99,6 @@ def grab_area():
     x1, x2 = sorted(coords[0::2])
     y1, y2 = sorted(coords[1::2])
     coords = (x1, y1, x2, y2)
-
-    if (x2 - x1) <= MIN_AREA_SIZE or (y2 - y1) <= MIN_AREA_SIZE:
-        logger.debug("Whole screen has been selected.")
-        return None
 
     logger.debug("Selected area %s.", coords)
     return coords
