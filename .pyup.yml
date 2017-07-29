@@ -1,5 +1,11 @@
+# Automated Security and Dependency Updates
 # https://pyup.io/docs/configuration/
 
+# set the default branch
 branch: develop
-schedule: every day
+
+# update schedule
+schedule: every week
+
+# search for requirement files
 search: True
