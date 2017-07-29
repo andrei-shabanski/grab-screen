@@ -1,4 +1,4 @@
 -r main.txt
 
-flake8==3.3.0
+flake8==3.4.1
 bandit==1.4.0
