@@ -79,8 +79,8 @@ def config_list():
 
 @main.command('image', help="Make a screenshot and upload to a storage.")
 @click.help_option('-h', '--help')
-@click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a uploaded file in the browser.")
-@click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a url to clipboard.")
+@click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a screenshot.")
+@click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a screenshot path to clipboard.")
 @click.option('-s', '--storage', 'storage_name',  help="Choose a storage.")
 def make_image(is_browse, is_copy_to_clipboard, storage_name):
 
