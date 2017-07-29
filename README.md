@@ -1,10 +1,11 @@
 # Grab Screen
 
-Take screenshots and upload anywhere!
+Take tthe screenshots and upload anywhere!
 
-## Installing
+## Instlling
 
 You install `grab-screen` with pip:
+
 
 ```shell
 pip install grab-screen
