@@ -4,7 +4,8 @@ Take tthe screenshots and upload anywhere!
 
 ## Instlling
 
-You instal `grab-screen` with pip:
+You install `grab-screen` with pip:
+
 
 ```shell
 pip install grab-screen
