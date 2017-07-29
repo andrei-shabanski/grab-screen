@@ -79,20 +79,26 @@ def config_list():
 
 @main.command('image', help="Make a screenshot and upload to a storage.")
 @click.help_option('-h', '--help')
-@click.option('-b', '--browser', is_flag=True, help="Open a uploaded file in the browser.")
-@click.option('-c', '--clipboard', is_flag=True, help="Copy a url to clipboard.")
-@click.option('-s', '--storage', help="Choose a storage.")
-def make_image(browser, clipboard, storage):
+@click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a uploaded file in the browser.")
+@click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a url to clipboard.")
+@click.option('-s', '--storage', 'storage_name',  help="Choose a storage.")
+def make_image(is_browse, is_copy_to_clipboard, storage_name):
 
     try:
-        storage = get_storage(storage)
-        file_detail = take_image(storage)
-    except (ScreenError, StorageError) as e:
+        image_stream, fmt = take_image()
+    except ScreenError as e:
         echo_error(e.message)
         sys.exit(1)
 
-    if browser:
+    try:
+        storage = get_storage(storage_name)
+        file_detail = storage.upload_image(image_stream, fmt)
+    except StorageError as e:
+        echo_error(e.message)
+        sys.exit(1)
+
+    if is_browse:
         open_path(file_detail.path)
 
-    if clipboard:
+    if is_copy_to_clipboard:
         copy_to_clipboard(file_detail.path)

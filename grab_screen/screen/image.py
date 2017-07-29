@@ -8,23 +8,20 @@ logger = logging.getLogger(__name__)
 __all__ = ['take_image']
 
 
-def take_image(storage):
+def take_image():
     logger.info("Taking an image.")
 
     coords = grab_area()
+    stream, fmt = _capture_screen_via_mss(coords)
 
-    logger.info("Capturing a screen.")
-    stream, format = _capture_screen_via_mss(coords)
-
-    logger.info("Saving the image in the storage.")
-    file_detail = storage.upload_image(stream, format)
-
-    return file_detail
+    return stream, fmt
 
 
 def _capture_screen_via_mss(coords):
     from mss import mss
     from ._mss import to_png
+
+    logger.info("Capturing a screen with mss.")
 
     monitor = {
         'top': coords[1],
@@ -44,6 +41,8 @@ def _capture_screen_via_mss(coords):
 
 def _capture_screen_via_pyscreenshot(coords):
     import pyscreenshot
+
+    logger.info("Capturing a screen with pyscreenshot.")
 
     stream = BytesIO()
     fmt = 'png'
