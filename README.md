@@ -1,6 +1,12 @@
 # Grab Screen
 
-Take screenshots and upload anywhere!
+Take screens and upload anywhere!
+
+
+fads
+
+
+hme
 
 ## Installing
 
