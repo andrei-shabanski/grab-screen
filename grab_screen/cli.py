@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from .conf import config as app_config
+from .conf import config
 from .exceptions import StorageError, ScreenError
 from .screen import take_image
 from .storages import get_storage
@@ -44,9 +44,9 @@ def config_set(key, value, unset):
     key = key.replace('.', '_').upper()
 
     if unset:
-        delattr(app_config, key)
+        delattr(config, key)
     else:
-        setattr(app_config, key, value)
+        setattr(config, key, value)
 
 
 @config_group.command('reset', help="Remove all options.")
@@ -57,7 +57,7 @@ def config_reset(force):
         echo_error('Aborted!')
         sys.exit(1)
 
-    app_config.reset(reload=False)
+    config.reset(reload=False)
 
 
 @config_group.command('list', help="Show options.")
@@ -66,7 +66,7 @@ def config_list():
     lines = []
 
     prev_option = None
-    for option in app_config:
+    for option in config:
         if not prev_option or prev_option.section != option.section:
             lines.append('[{}]'.format(option.section))
         lines.append("\t{} = '{}'".format(option.option, option.value))

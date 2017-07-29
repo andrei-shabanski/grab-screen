@@ -19,7 +19,7 @@ setup(
     url='https://github.com/andrei-shabanski/grab-screen',
     author='Andrei Shabanski',
     author_email='andrei.shabanski@gmail.com',
-    packages=find_packages(include=['grab_screen']),
+    packages=find_packages(exclude=['test']),
     include_package_data=True,
     install_requires=requirements,
     zip_safe=False,
