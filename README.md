@@ -1,6 +1,7 @@
 # Grab Screen
 
-Take screenots and upload anywhere!
+Take screens and upload anywhere!
+
 
 fads
 
