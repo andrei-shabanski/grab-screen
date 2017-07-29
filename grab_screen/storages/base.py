@@ -10,5 +10,5 @@ class File(object):
 
 class BaseStorage(object):
 
-    def upload_image(self, path):
+    def upload_image(self, stream, fmt='png'):
         raise NotImplementedError()

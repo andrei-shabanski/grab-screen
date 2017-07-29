@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from .conf import config as app_config
+from .conf import config
 from .exceptions import StorageError, ScreenError
 from .screen import take_image
 from .storages import get_storage
@@ -44,9 +44,9 @@ def config_set(key, value, unset):
     key = key.replace('.', '_').upper()
 
     if unset:
-        delattr(app_config, key)
+        delattr(config, key)
     else:
-        setattr(app_config, key, value)
+        setattr(config, key, value)
 
 
 @config_group.command('reset', help="Remove all options.")
@@ -57,7 +57,7 @@ def config_reset(force):
         echo_error('Aborted!')
         sys.exit(1)
 
-    app_config.reset(reload=False)
+    config.reset(reload=False)
 
 
 @config_group.command('list', help="Show options.")
@@ -66,7 +66,7 @@ def config_list():
     lines = []
 
     prev_option = None
-    for option in app_config:
+    for option in config:
         if not prev_option or prev_option.section != option.section:
             lines.append('[{}]'.format(option.section))
         lines.append("\t{} = '{}'".format(option.option, option.value))
@@ -79,20 +79,26 @@ def config_list():
 
 @main.command('image', help="Make a screenshot and upload to a storage.")
 @click.help_option('-h', '--help')
-@click.option('-b', '--browser', is_flag=True, help="Open a uploaded file in the browser.")
-@click.option('-c', '--clipboard', is_flag=True, help="Copy a url to clipboard.")
-@click.option('-s', '--storage', help="Choose a storage.")
-def make_image(browser, clipboard, storage):
+@click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a screenshot.")
+@click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a screenshot path to clipboard.")
+@click.option('-s', '--storage', 'storage_name',  help="Choose a storage.")
+def make_image(is_browse, is_copy_to_clipboard, storage_name):
 
     try:
-        storage = get_storage(storage)
-        file_detail = take_image(storage)
-    except (ScreenError, StorageError) as e:
+        image_stream, fmt = take_image()
+    except ScreenError as e:
         echo_error(e.message)
         sys.exit(1)
 
-    if browser:
+    try:
+        storage = get_storage(storage_name)
+        file_detail = storage.upload_image(image_stream, fmt)
+    except StorageError as e:
+        echo_error(e.message)
+        sys.exit(1)
+
+    if is_browse:
         open_path(file_detail.path)
 
-    if clipboard:
+    if is_copy_to_clipboard:
         copy_to_clipboard(file_detail.path)
