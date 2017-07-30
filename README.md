@@ -1,5 +1,10 @@
 # Grab Screen
 
+[![Build Status](https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master)](https://travis-ci.org/andrei-shabanski/grab-screen)
+[![PyPI](https://img.shields.io/pypi/pyversions/grab-screen.svg)](https://github.com/andrei-shabanski/grab-screen)
+[![Github All Releases](https://img.shields.io/github/downloads/andrei-shabanski/grab-screen/total.svg)](https://github.com/andrei-shabanski/grab-screen/releases)
+[![PyPI](https://img.shields.io/pypi/dm/Django.svg)](https://pypi.python.org/pypi/grab-screen)
+
 Take screenshots and upload anywhere!
 
 ## Installing
