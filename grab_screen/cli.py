@@ -3,10 +3,10 @@ import sys
 import click
 
 from .conf import config
-from .exceptions import StorageError, ScreenError
+from .exceptions import ScreenError, StorageError
 from .screen import take_image
 from .storages import get_storage
-from .utils import open_path, copy_to_clipboard
+from .utils import copy_to_clipboard, open_path
 from .version import __version__
 
 echo_error = lambda text: click.echo(click.style(text, fg='red'), err=True)

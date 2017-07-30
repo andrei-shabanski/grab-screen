@@ -1,13 +1,17 @@
 import logging
 
-from Tkinter import Tk, Canvas, BOTH
-
+from ..compat import PY2
 from ..exceptions import ScreenError
+
+if PY2:
+    import Tkinter as tk
+else:
+    import tkinter as tk
 
 logger = logging.getLogger(__name__)
 
 
-class Grabber(Tk):
+class Grabber(tk.Tk):
     WINDOW_COLOR = '#ffffff'
     WINDOW_ALPHA = 0.2
 
@@ -30,7 +34,7 @@ class Grabber(Tk):
         return scope['coords']
 
     def __init__(self, on_selected):
-        Tk.__init__(self)
+        tk.Tk.__init__(self)
 
         self._on_selected = on_selected
 
@@ -50,8 +54,8 @@ class Grabber(Tk):
         self.attributes('-alpha', self.WINDOW_ALPHA)
 
     def initialize_controls(self):
-        self._canvas = Canvas(self, bg=self.WINDOW_COLOR, cursor='crosshair')
-        self._canvas.pack(fill=BOTH, expand=1)
+        self._canvas = tk.Canvas(self, bg=self.WINDOW_COLOR, cursor='crosshair')
+        self._canvas.pack(fill=tk.BOTH, expand=1)
 
         self._canvas.bind('<Button-1>', self.start_drawing)
         self._canvas.bind('<Button-3>', self.exit)
@@ -85,7 +89,7 @@ class Grabber(Tk):
         self._on_selected(self._coords)
 
     def exit(self, event=None):
-        self.iconify()
+        self.attributes('-alpha', 0)
         self.destroy()
 
 

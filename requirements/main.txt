@@ -2,4 +2,3 @@ click==6.7
 mss==3.0.1
 pyperclip==1.5.27
 requests==2.18.2
-six==1.10.0
