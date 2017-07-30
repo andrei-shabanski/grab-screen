@@ -2,6 +2,7 @@ import logging
 
 from ..compat import PY2
 from ..exceptions import ScreenError
+from ..version import __name__
 
 if PY2:
     import Tkinter as tk
@@ -35,6 +36,8 @@ class Grabber(tk.Tk):
 
     def __init__(self, on_selected):
         tk.Tk.__init__(self)
+
+        self.title(__name__)
 
         self._on_selected = on_selected
 
