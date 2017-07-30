@@ -11,7 +11,7 @@ prune: clean
 	rm -rf .venv-*/
 
 lint:
-	flake8
+	flake8 grab_screen/
 
 test:
 	py.test tests/

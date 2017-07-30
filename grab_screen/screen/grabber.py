@@ -1,6 +1,6 @@
 import logging
 
-from Tkinter import Tk, Canvas, BOTH
+from Tkinter import BOTH, Canvas, Tk
 
 from ..exceptions import ScreenError
 

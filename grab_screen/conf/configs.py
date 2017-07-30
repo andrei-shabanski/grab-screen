@@ -1,6 +1,6 @@
+import ConfigParser
 import logging.config
 import os
-import ConfigParser
 from collections import namedtuple
 from shutil import copyfile
 

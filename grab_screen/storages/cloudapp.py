@@ -1,7 +1,8 @@
 import logging
 import os
-import requests
 import time
+
+import requests
 from requests.auth import HTTPDigestAuth
 
 from .base import BaseStorage, File
