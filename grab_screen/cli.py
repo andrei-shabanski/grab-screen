@@ -24,7 +24,7 @@ def prompt_config_value(ctx, param, value):
 
 @click.group("cloudapp-screenshots")
 @click.help_option('-h', '--help')
-@click.version_option(__version__, '-v', '--version')
+@click.version_option(__version__, '-v', '--version', message="v%(version)s")
 def main():
     pass
 
@@ -81,9 +81,8 @@ def config_list():
 @click.help_option('-h', '--help')
 @click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a screenshot.")
 @click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a screenshot path to clipboard.")
-@click.option('-s', '--storage', 'storage_name',  help="Choose a storage.")
+@click.option('-s', '--storage', 'storage_name', help="Choose a storage.")
 def make_image(is_browse, is_copy_to_clipboard, storage_name):
-
     try:
         image_stream, fmt = take_image()
     except ScreenError as e:
