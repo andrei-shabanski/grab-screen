@@ -1,7 +1,7 @@
-VENV_PY=2.7
-VENV_DIR=.venv-$(VENV_PY)
+VENV_PY = 2.7
+VENV_DIR = .venv-$(VENV_PY)
 
-APP_VERSION=$(shell python -m grab_screen -v)
+APP_VERSION = $(shell python -m grab_screen -v)
 
 clean:
 	rm -rf build/ dist/ grab_screen.egg-info/
