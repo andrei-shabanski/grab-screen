@@ -12,3 +12,6 @@ indent_style = space
 
 [*.{py,md,yml}]
 indent_size = 4
+
+[Makefile]
+indent_style = tab
