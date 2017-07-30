@@ -26,7 +26,7 @@ virtualenv:
 	python -m virtualenv -p python$(VENV_PY) $(VENV_DIR)
 
 release: clean
-	git tag -a $(APP_VERSION)
+	git tag -a $(APP_VERSION) -m "Release $(APP_VERSION)"
 	git push origin $(APP_VERSION)
 	python setup.py sdist upload
 	python setup.py bdist_wheel upload
