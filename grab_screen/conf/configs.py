@@ -1,10 +1,18 @@
-import ConfigParser
 import logging.config
 import os
 from collections import namedtuple
 from shutil import copyfile
 
+from ..compat import PY2
+
+if PY2:
+    from ConfigParser import ConfigParser
+else:
+    from configparser import ConfigParser
+
 logger = logging.getLogger(__name__)
+
+LOGGER_NAMES = ('CRITICAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET')
 
 Option = namedtuple('Option', ('key', 'section', 'option', 'value'))
 
@@ -20,7 +28,7 @@ class Config(object):
     _default_option = 'default'
 
     def __init__(self):
-        self._config = ConfigParser.ConfigParser()
+        self._config = ConfigParser()
 
     def __iter__(self):
         for section in self._sections:
@@ -79,7 +87,7 @@ class Config(object):
 
     def _load_logger(self):
         level = self.LOGGER_LEVEL.upper()
-        if level not in logging._levelNames.keys():
+        if level not in LOGGER_NAMES:
             logger.warning("Invalid logger level '%s'", level)
             level = 'INFO'
 
@@ -151,7 +159,7 @@ class Config(object):
         words = key.split('_', 1)
 
         try:
-            section = filter(lambda s: s == words[0], self._sections)[0]
+            section = tuple(filter(lambda s: s == words[0], self._sections))[0]
             option = words[1] or self._default_option
         except IndexError:
             section = self._default_section
