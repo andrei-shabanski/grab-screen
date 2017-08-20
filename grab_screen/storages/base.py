@@ -9,6 +9,13 @@ class File(object):
 
 
 class BaseStorage(object):
+    """Base class for storages."""
 
-    def upload_image(self, stream, fmt='png'):
+    def save_image(self, image):
+        """
+        Saves an image.
+
+        :param image: `Image` tuple with image data.
+        :return: `File` object.
+        """
         raise NotImplementedError()
