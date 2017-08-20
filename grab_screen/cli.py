@@ -4,7 +4,8 @@ import click
 
 from .conf import config
 from .exceptions import ScreenError, StorageError
-from .screen import take_image
+from .images import capture_image
+from .screen import Grabber
 from .storages import get_storage
 from .utils import copy_to_clipboard, open_path
 from .version import __version__
@@ -19,7 +20,7 @@ def prompt_config_value(ctx, param, value):
     if ctx.params['unset']:
         return None
 
-    return click.prompt('Value', hide_input=True)
+    return click.prompt('Secret', hide_input=True)
 
 
 @click.group("cloudapp-screenshots")
@@ -57,7 +58,7 @@ def config_reset(force):
         echo_error('Aborted!')
         sys.exit(1)
 
-    config.reset(reload=False)
+    config.reset()
 
 
 @config_group.command('list', help="Show options.")
@@ -65,13 +66,9 @@ def config_reset(force):
 def config_list():
     lines = []
 
-    prev_option = None
     for option in config:
-        if not prev_option or prev_option.section != option.section:
-            lines.append('[{}]'.format(option.section))
-        lines.append("\t{} = '{}'".format(option.option, option.value))
-
-        prev_option = option
+        value = config.get(option)
+        lines.append('{} = {}'.format(option, value))
 
     output = '\n'.join(lines)
     click.echo_via_pager(output)
@@ -82,17 +79,15 @@ def config_list():
 @click.option('-b', '--browse', 'is_browse', is_flag=True, help="Open a screenshot.")
 @click.option('-c', '--clipboard', 'is_copy_to_clipboard', is_flag=True, help="Copy a screenshot path to clipboard.")
 @click.option('-s', '--storage', 'storage_name', help="Choose a storage.")
-def make_image(is_browse, is_copy_to_clipboard, storage_name):
-    try:
-        image_stream, fmt = take_image()
-    except ScreenError as e:
-        echo_error(e.message)
-        sys.exit(1)
-
+def take_image(is_browse, is_copy_to_clipboard, storage_name):
     try:
         storage = get_storage(storage_name)
-        file_detail = storage.upload_image(image_stream, fmt)
-    except StorageError as e:
+
+        coords = Grabber.select_area()
+        image = capture_image(coords)
+
+        file_detail = storage.save_image(image)
+    except (ScreenError, StorageError) as e:
         echo_error(e.message)
         sys.exit(1)
 

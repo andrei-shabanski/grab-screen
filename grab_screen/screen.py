@@ -1,15 +1,17 @@
 import logging
+from collections import namedtuple
 
-from ..compat import PY2
-from ..exceptions import ScreenError
-from ..version import __name__
+from .exceptions import ScreenError
+from .version import __name__
 
-if PY2:
+try:
     import Tkinter as tk
-else:
+except ImportError:
     import tkinter as tk
 
 logger = logging.getLogger(__name__)
+
+Coords = namedtuple('Coords', ('top', 'left', 'right', 'bottom'))
 
 
 class Grabber(tk.Tk):
@@ -19,7 +21,10 @@ class Grabber(tk.Tk):
     RECTANGLE_COLOR = '#000000'
 
     @classmethod
-    def run(cls):
+    def select_area(cls):
+        logger.info("Selecting an area.")
+
+        # run TK app to select an area
         scope = {'coords': None}
 
         def set_coords(_coords):
@@ -32,7 +37,17 @@ class Grabber(tk.Tk):
         except KeyboardInterrupt:
             grabber.exit()
 
-        return scope['coords']
+        coords = scope['coords']
+        if not coords:
+            raise ScreenError("Aborted!")
+
+        # normalize coords
+        coords = tuple(map(int, coords))
+        left, right = sorted(coords[0::2])
+        top, bottom = sorted(coords[1::2])
+
+        logger.debug("Selected area %s.", coords)
+        return Coords(top, left, right, bottom)
 
     def __init__(self, on_selected):
         tk.Tk.__init__(self)
@@ -94,18 +109,3 @@ class Grabber(tk.Tk):
     def exit(self, event=None):
         self.attributes('-alpha', 0)
         self.destroy()
-
-
-def grab_area():
-    logger.info("Selecting an area.")
-    coords = Grabber.run()
-    if not coords:
-        raise ScreenError("Aborted!")
-
-    coords = tuple(map(int, coords))
-    x1, x2 = sorted(coords[0::2])
-    y1, y2 = sorted(coords[1::2])
-    coords = (x1, y1, x2, y2)
-
-    logger.debug("Selected area %s.", coords)
-    return coords

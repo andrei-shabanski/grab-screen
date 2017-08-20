@@ -1,18 +1,42 @@
-"""
-This is part of the MSS Python's module.
-Source: https://github.com/BoboTiG/python-mss
-License: MIT
-2017-07-18
-"""
+import logging
 import io
 import struct
 import zlib
+from collections import namedtuple
+
+from mss import mss
+
+__all__ = ['capture_image']
+
+logger = logging.getLogger(__name__)
+
+Image = namedtuple('Image', ('stream', 'format'))
+
+
+def capture_image(coords):
+    """Take a screenshot."""
+    logger.info("Capturing a screen.")
+    screen = mss()
+    mss_image = screen.grab({
+        'top': coords.top,
+        'left': coords.left,
+        'width': coords.right - coords.left + 1,
+        'height': coords.bottom - coords.top + 1,
+    })
+
+    stream = to_png(mss_image.rgb, mss_image.size)
+
+    return Image(stream, 'png')
 
 
 def to_png(data, size):
-    # type: (bytes, Tuple[int, int], str) -> None
     """
     Dump data to a PNG file.
+
+    This code is a part of the MSS library.
+    Source: https://github.com/BoboTiG/python-mss/blob/d740fa774cae4b8ccaddf980cbf417ebe33117e7/mss/tools.py#L10
+    MSS License: MIT
+    2017-07-18
 
     :param bytes data: RGBRGB...RGB data.
     :param tuple size: The (width, height) pair.

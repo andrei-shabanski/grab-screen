@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def get_storage(name=None):
     if not name:
-        name = config.STORAGES_DEFAULT
+        name = config.STORAGE
 
     module_path = 'grab_screen.storages.{}'.format(name)
 
