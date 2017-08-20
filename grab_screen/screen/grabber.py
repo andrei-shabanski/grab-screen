@@ -1,12 +1,11 @@
 import logging
 
-from ..compat import PY2
 from ..exceptions import ScreenError
 from ..version import __name__
 
-if PY2:
+try:
     import Tkinter as tk
-else:
+except ImportError:
     import tkinter as tk
 
 logger = logging.getLogger(__name__)
