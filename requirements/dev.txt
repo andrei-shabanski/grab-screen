@@ -7,7 +7,7 @@ tox<3
 bandit==1.4.0
 flake8==3.4.1
 flake8-colors==0.1.6
-flake8-deprecated
+flake8-deprecated==1.2.1
 flake8-import-order
 flake8-mutable
 pep8-naming
