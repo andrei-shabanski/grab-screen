@@ -6,7 +6,7 @@ tox<3
 # linters
 bandit==1.4.0
 flake8==3.4.1
-flake8-colors
+flake8-colors==0.1.6
 flake8-deprecated
 flake8-import-order
 flake8-mutable
