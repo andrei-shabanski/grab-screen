@@ -1,5 +1,6 @@
 # Grab Screen
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f2d7aaac9684b728fd45fbab2fbca3b)](https://www.codacy.com/app/andrei-shabanski/grab-screen?utm_source=github.com&utm_medium=referral&utm_content=andrei-shabanski/grab-screen&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master)](https://travis-ci.org/andrei-shabanski/grab-screen)
 [![PyPI](https://img.shields.io/pypi/pyversions/grab-screen.svg)](https://github.com/andrei-shabanski/grab-screen)
 [![PyPI](https://img.shields.io/pypi/l/grab-screen.svg)](https://github.com/andrei-shabanski/grab-screen)
