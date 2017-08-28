@@ -4,7 +4,7 @@ pytest<4
 tox<3
 
 # linters
-bandit
+bandit==1.4.0
 flake8
 flake8-colors
 flake8-deprecated
