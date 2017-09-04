@@ -10,30 +10,29 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 DEFAULT_LEVEL = 'WARNING'
-LOGGER_LEVELS = ('CRITICAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'NOTSET')
-
-TEXT = 1
-BOOLEAN = 2
+LOGGER_LEVELS = ('CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'NOTSET')
 
 
 class Config(object):
-    _path = os.path.join(os.path.expanduser('~'), '.config', 'grab-screen', 'config.ini')
-
     _default_section = 'app'
-    _sections = ('app', 'logger', 'cloudapp')
+    _default_config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.ini'))
 
-    _default_option = 'default'
+    def __init__(self, auto_save=True, path=None):
+        if not path:
+            if 'GRAB_SCREEN_CONFIG_FILE' in os.environ:
+                path = os.environ['GRAB_SCREEN_CONFIG_FILE']
+            else:
+                path = os.path.join(os.path.expanduser('~'), '.config', 'grab-screen', 'config.ini')
 
-    def __init__(self, auto_save=True):
-        self._auto_save = auto_save
-        self._config = ConfigParser()
+        self.auto_save = auto_save
+        self.path = path
+        self._parser = None
+
+        self.load()
 
     def __iter__(self):
-        for section in self._sections:
-            if not self._config.has_section(section):
-                continue
-
-            for option in self._config.options(section):
+        for section in self._parser.sections():
+            for option in self._parser.options(section):
                 key = '{}_{}'.format(section, option).upper()
                 yield key
 
@@ -60,17 +59,11 @@ class Config(object):
         key = key.lower()
 
         section, option = self._split_key(key)
-        option_type = self._get_value_type(option)
 
-        if not self._config.has_option(section, option):
+        if not self._parser.has_option(section, option):
             return None
 
-        if option_type == BOOLEAN:
-            getter = self._config.getboolean
-        else:
-            getter = self._config.get
-
-        return getter(section, option)
+        return self._parser.get(section, option)
 
     def set(self, key, value):
         """Sets an option."""
@@ -78,9 +71,9 @@ class Config(object):
 
         section, option = self._split_key(key)
 
-        self._config.set(section, option, str(value))
+        self._parser.set(section, option, str(value))
 
-        if self._auto_save:
+        if self.auto_save:
             self.save()
 
     def delete(self, key):
@@ -88,18 +81,19 @@ class Config(object):
         key = key.lower()
 
         section, option = self._split_key(key)
-        self._config.remove_option(section, option)
+        self._parser.remove_option(section, option)
 
-        if self._auto_save:
+        if self.auto_save:
             self.save()
 
     def load(self):
         """Reads settings from the file."""
-        if not os.path.exists(self._path):
+        if not os.path.exists(self.path):
             self.reset()
             return
 
-        self._config.read(self._path)
+        self._parser = ConfigParser()
+        self._parser.read(self.path)
 
         self._load_logger()
 
@@ -107,20 +101,23 @@ class Config(object):
         """Writes settings to the file."""
         self._create_config_directory()
 
-        with open(self._path, 'w') as config_file:
-            self._config.write(config_file)
+        for section in self._parser.sections():
+            if not self._parser.options(section):
+                self._parser.remove_section(section)
+
+        with open(self.path, 'w') as config_file:
+            self._parser.write(config_file)
 
     def reset(self):
         """Restores the default settings."""
         self._create_config_directory()
 
-        default_config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'default.ini'))
-        copyfile(default_config_path, self._path)
+        copyfile(self._default_config_file_path, self.path)
 
         self.load()
 
     def _create_config_directory(self):
-        directory = os.path.dirname(self._path)
+        directory = os.path.dirname(self.path)
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -161,23 +158,13 @@ class Config(object):
 
     def _split_key(self, key):
         """Gets a section and an option names by the key."""
-        words = key.split('_', 1)
-
         try:
-            section = tuple(filter(lambda s: s == words[0], self._sections))[0]
-            option = words[1] or self._default_option
-        except IndexError:
+            section, option = key.split('_', 1)
+        except (ValueError, IndexError):
             section = self._default_section
             option = key
 
-        if not self._config.has_section(section):
-            self._config.add_section(section)
+        if not self._parser.has_section(section):
+            self._parser.add_section(section)
 
         return section, option
-
-    def _get_value_type(self, key):
-        """Determines an option type."""
-        if key.startswith('is_'):
-            return BOOLEAN
-
-        return TEXT
