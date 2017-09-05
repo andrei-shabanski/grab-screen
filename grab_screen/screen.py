@@ -2,14 +2,14 @@ import logging
 from collections import namedtuple
 
 from .exceptions import ScreenError
-from .version import __name__
+from .version import __title__
 
 try:
     import Tkinter as tk
 except ImportError:
     import tkinter as tk
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__title__)
 
 Coords = namedtuple('Coords', ('top', 'left', 'right', 'bottom'))
 
@@ -52,7 +52,7 @@ class Grabber(tk.Tk):
     def __init__(self, on_selected):
         tk.Tk.__init__(self)
 
-        self.title(__name__)
+        self.title(__title__)
 
         self._on_selected = on_selected
 
