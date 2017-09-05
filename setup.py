@@ -31,12 +31,13 @@ class LintCommand(Command):
 
     def run(self):
         self.status('Checking flake8 rules...')
-        flake8_status = os.system('flake8'.format(sys.executable))
+        flake8_status = os.system('flake8')
 
         self.status('Checking bandit rules...')
-        bandit_status = os.system('bandit -r .'.format(sys.executable))
+        bandit_status = os.system('bandit -r .')
 
-        sys.exit(flake8_status or bandit_status)
+        status = 1 if flake8_status or bandit_status else 0
+        sys.exit(status)
 
 
 # load the description from the README file
