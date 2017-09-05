@@ -1,6 +1,6 @@
-from setuptools import find_packages, setup
-
 from grab_screen import __version__
+
+from setuptools import find_packages, setup
 
 # get the description from the README file
 with open('README.md') as readme_file:
