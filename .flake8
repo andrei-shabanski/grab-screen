@@ -12,7 +12,8 @@ ignore =
 # I - flake8-import-order
 # N - pep8-naming
 # M - flake8-mutable
-select = C90, E, W, F, D, I, N, M
+# T - flake8-print
+select = C90, E, W, F, D, I, N, M, T
 
 # flake8-import-order configs
 application-package-names = smarkets

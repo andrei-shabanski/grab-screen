@@ -1,5 +1,5 @@
-import logging
 import io
+import logging
 import struct
 import zlib
 from collections import namedtuple
