@@ -11,10 +11,11 @@ prune: clean
 	rm -rf .venv-*/
 
 lint:
-	flake8 grab_screen/
+	flake8
+	bandit -r grab_screen/
 
 test:
-	py.test tests/
+	pytest -q --durations=0
 
 pip:
 	pip install -r requirements/main.txt
