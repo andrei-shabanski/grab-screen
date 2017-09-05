@@ -31,12 +31,12 @@ class LintCommand(Command):
 
     def run(self):
         self.status('Checking flake8 rules...')
-        os.system('flake8'.format(sys.executable))
+        flake8_status = os.system('flake8'.format(sys.executable))
 
         self.status('Checking bandit rules...')
-        os.system('bandit -r .'.format(sys.executable))
+        bandit_status = os.system('bandit -r .'.format(sys.executable))
 
-        sys.exit()
+        sys.exit(flake8_status or bandit_status)
 
 
 # load the description from the README file
@@ -50,7 +50,7 @@ test_requirements = parse_requirements('requirements/test.txt')
 # load the package info
 about = {}
 with open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'grab_screen', 'version.py'))) as version_file:
-    exec (version_file.read(), about)
+    exec(version_file.read(), about)
 
 setup(
     name='grab-screen',
