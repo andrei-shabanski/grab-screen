@@ -11,17 +11,16 @@ prune: clean
 	rm -rf .venv-*/
 
 lint:
-	flake8
-	bandit -r .
+	python setup.py lint
 
 test:
-	pytest -q --durations=0
+	python setup.py test
 
 pip:
-	pip install -r requirements/main.txt
+	pip install -e .
 
 pip-dev:
-	pip install -r requirements/dev.txt
+	pip install -e .[dev]
 
 virtualenv:
 	python -m virtualenv -p python$(VENV_PY) $(VENV_DIR)
@@ -29,5 +28,4 @@ virtualenv:
 release: clean
 	git tag -a $(APP_VERSION) -m "Release $(APP_VERSION)"
 	git push origin $(APP_VERSION)
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	python setup.py sdist bdist_wheel upload
