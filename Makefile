@@ -12,7 +12,7 @@ prune: clean
 
 lint:
 	flake8
-	bandit -r grab_screen/
+	bandit -r .
 
 test:
 	pytest -q --durations=0
