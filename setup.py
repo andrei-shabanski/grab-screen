@@ -6,8 +6,9 @@ from setuptools import Command, find_packages, setup
 
 def parse_requirements(path):
     with open(path) as file:
-        requirements = filter(lambda line: line and not line.startswith('#'), file)
-    return tuple(requirements)
+        requirements = tuple(filter(lambda line: line and not line.startswith('#'), file))
+
+    return requirements
 
 
 class LintCommand(Command):
