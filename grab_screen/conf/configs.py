@@ -56,8 +56,6 @@ class Config(object):
 
     def get(self, key):
         """Gets an option."""
-        key = key.lower()
-
         section, option = self._split_key(key)
 
         if not self._parser.has_option(section, option):
@@ -67,7 +65,9 @@ class Config(object):
 
     def set(self, key, value):
         """Sets an option."""
-        key = key.lower()
+        if value is None:
+            self.delete(key)
+            return
 
         section, option = self._split_key(key)
 
@@ -78,12 +78,10 @@ class Config(object):
 
     def delete(self, key):
         """Deletes an option."""
-        key = key.lower()
-
         section, option = self._split_key(key)
-        self._parser.remove_option(section, option)
+        removed = self._parser.remove_option(section, option)
 
-        if self.auto_save:
+        if removed and self.auto_save:
             self.save()
 
     def load(self):
@@ -158,6 +156,8 @@ class Config(object):
 
     def _split_key(self, key):
         """Gets a section and an option names by the key."""
+        key = key.lower()
+
         try:
             section, option = key.split('_', 1)
         except (ValueError, IndexError):
