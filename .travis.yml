@@ -6,9 +6,9 @@ python:
   - "3.5"
   - "3.6"
   - "nightly"
-
-install: "pip install -e .[dev]"
-
+install:
+  - pip install -e .[dev]
 script:
-    - python setup.py lint
-    - python setup.py test
+  - make lint test
+after_success:
+  - make codacy_coverage coveralls_coverage

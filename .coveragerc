@@ -1,0 +1,9 @@
+[run]
+branch = True
+data_file = coverage
+
+[report]
+show_missing = True
+
+[html]
+directory = coverage_html
