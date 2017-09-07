@@ -11,4 +11,4 @@ install:
 script:
   - make lint test
 after_success:
-  - make codacy_coverage coveralls_coverage
+  - make codacy coveralls codecov

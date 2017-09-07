@@ -29,11 +29,14 @@ cov:
 	coverage xml
 	coverage report
 
-codacy_coverage: cov
+codacy: cov
 	python-codacy-coverage
 
-coveralls_coverage: cov
+coveralls: cov
 	coveralls
+
+codecov: cov
+	codecov
 
 release: clean
 	git tag -a $(APP_VERSION) -m "Release $(APP_VERSION)"
