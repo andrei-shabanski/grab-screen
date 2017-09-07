@@ -7,6 +7,8 @@ Grab Screen
     :target: https://travis-ci.org/andrei-shabanski/grab-screen
 .. image:: https://coveralls.io/repos/github/andrei-shabanski/grab-screen/badge.svg?branch=master
     :target: https://coveralls.io/github/andrei-shabanski/grab-screen?branch=master
+.. image:: https://requires.io/github/andrei-shabanski/grab-screen/requirements.svg?branch=master
+    :target: https://requires.io/github/andrei-shabanski/grab-screen/requirements/?branch=master
 .. image:: https://img.shields.io/pypi/pyversions/grab-screen.svg
     :target: https://pypi.python.org/pypi/grab-screen
 .. image:: https://img.shields.io/pypi/l/grab-screen.svg
