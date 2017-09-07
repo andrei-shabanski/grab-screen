@@ -47,7 +47,6 @@ with open('README.rst') as readme_file:
 # load the python dependencies
 main_requirements = parse_requirements('requirements/main.txt')
 test_requirements = parse_requirements('requirements/test.txt')
-dev_requirements = parse_requirements('requirements/dev.txt')
 
 # load the package info
 about = {}
@@ -70,7 +69,7 @@ setup(
     tests_require=test_requirements,
     setup_requires=['pytest-runner'],
     extras_require={
-        'dev': dev_requirements + test_requirements,
+        'dev': test_requirements,
     },
 
     entry_points={
