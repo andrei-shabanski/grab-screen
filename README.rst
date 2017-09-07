@@ -5,6 +5,8 @@ Grab Screen
     :target: https://www.codacy.com/app/andrei-shabanski/grab-screen?utm_source=github.com&utm_medium=referral&utm_content=andrei-shabanski/grab-screen&utm_campaign=badger
 .. image:: https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master
     :target: https://travis-ci.org/andrei-shabanski/grab-screen
+.. image:: https://coveralls.io/repos/github/andrei-shabanski/grab-screen/badge.svg?branch=master
+    :target: https://coveralls.io/github/andrei-shabanski/grab-screen?branch=master
 .. image:: https://img.shields.io/pypi/pyversions/grab-screen.svg
     :target: https://pypi.python.org/pypi/grab-screen
 .. image:: https://img.shields.io/pypi/l/grab-screen.svg
