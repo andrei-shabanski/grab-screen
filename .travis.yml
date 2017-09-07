@@ -9,6 +9,6 @@ python:
 install:
   - pip install -e .[dev]
 script:
-  - make lint test coverage
+  - make lint test
 after_success:
   - make codacy_coverage coveralls_coverage

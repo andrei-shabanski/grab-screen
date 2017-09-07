@@ -25,14 +25,14 @@ lint:
 test:
 	python setup.py test
 
-coverage:
+cov:
 	coverage xml
 	coverage report
 
-codacy_coverage: coverage
+codacy_coverage: cov
 	python-codacy-coverage
 
-coveralls_coverage: coverage
+coveralls_coverage: cov
 	coveralls
 
 release: clean
