@@ -1,5 +1,6 @@
 pytest<4
 pytest-mock==1.6.2
+pytest-cov==2.5.1
 tox<3
 
 # linters

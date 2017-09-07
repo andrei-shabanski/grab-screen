@@ -9,6 +9,4 @@ python:
 
 install: "pip install -e .[dev]"
 
-script:
-    - python setup.py lint
-    - python setup.py test
+script: "make lint test codacy_coverage"

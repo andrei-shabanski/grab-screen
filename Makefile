@@ -8,13 +8,7 @@ clean:
 	find . -name '*.py[co]' -exec rm -f {} +
 
 prune: clean
-	rm -rf .venv-*/
-
-lint:
-	python setup.py lint
-
-test:
-	python setup.py test
+	rm -rf .venv-*/ coverage coverage.* coverage_html/ .eggs/ .cache/
 
 pip:
 	pip install -e .
@@ -24,6 +18,16 @@ pip-dev:
 
 virtualenv:
 	python -m virtualenv -p python$(VENV_PY) $(VENV_DIR)
+
+lint:
+	python setup.py lint
+
+test:
+	python setup.py test
+
+codacy_coverage: test
+	coverage xml
+	python-codacy-coverage -r coverage.xml -c (`git rev-parse HEAD`)
 
 release: clean
 	git tag -a $(APP_VERSION) -m "Release $(APP_VERSION)"
