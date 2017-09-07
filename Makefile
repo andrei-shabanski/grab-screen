@@ -25,9 +25,15 @@ lint:
 test:
 	python setup.py test
 
-codacy_coverage: test
+coverage:
 	coverage xml
-	python-codacy-coverage -r coverage.xml
+	coverage report
+
+codacy_coverage: coverage
+	python-codacy-coverage
+
+coveralls_coverage: coverage
+	coveralls
 
 release: clean
 	git tag -a $(APP_VERSION) -m "Release $(APP_VERSION)"
