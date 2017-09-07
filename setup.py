@@ -6,7 +6,7 @@ from setuptools import Command, find_packages, setup
 
 def parse_requirements(path):
     with open(path) as file:
-        requirements = tuple(filter(lambda line: line and not line.startswith('#'), file))
+        requirements = list(filter(lambda line: line and not line.startswith('#'), file))
 
     return requirements
 
@@ -47,6 +47,7 @@ with open('README.rst') as readme_file:
 # load the python dependencies
 main_requirements = parse_requirements('requirements/main.txt')
 test_requirements = parse_requirements('requirements/test.txt')
+dev_requirements = parse_requirements('requirements/dev.txt')
 
 # load the package info
 about = {}
@@ -69,7 +70,7 @@ setup(
     tests_require=test_requirements,
     setup_requires=['pytest-runner'],
     extras_require={
-        'dev': test_requirements,
+        'dev': dev_requirements + test_requirements,
     },
 
     entry_points={
