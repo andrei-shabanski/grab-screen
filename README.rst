@@ -3,6 +3,8 @@ Grab Screen
 
 .. image:: https://api.codacy.com/project/badge/Grade/0f2d7aaac9684b728fd45fbab2fbca3b
     :target: https://www.codacy.com/app/andrei-shabanski/grab-screen?utm_source=github.com&utm_medium=referral&utm_content=andrei-shabanski/grab-screen&utm_campaign=badger
+.. image:: https://codebeat.co/badges/c07177a5-d5f0-4a7f-abc4-77c152a105fa
+    :target: https://codebeat.co/projects/github-com-andrei-shabanski-grab-screen-master
 .. image:: https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master
     :target: https://travis-ci.org/andrei-shabanski/grab-screen
 .. image:: https://coveralls.io/repos/github/andrei-shabanski/grab-screen/badge.svg?branch=master
