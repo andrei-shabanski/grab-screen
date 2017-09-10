@@ -1,6 +1,8 @@
 Grab Screen
 ===========
 
+Take screenshots and upload anywhere!
+
 .. list-table::
    :stub-columns: 1
 
@@ -33,12 +35,10 @@ Grab Screen
        .. image:: https://requires.io/github/andrei-shabanski/grab-screen/requirements.svg?branch=master
             :target: https://requires.io/github/andrei-shabanski/grab-screen/requirements/?branch=master
 
-Take screenshots and upload anywhere!
-
-Installing
+Installation
 ----------
 
-You install ``grab-screen`` with pip:
+You can install it with pip:
 
 .. code:: shell
 
@@ -46,6 +46,8 @@ You install ``grab-screen`` with pip:
 
 Usage
 -----
+
+After installation, you can use ``grab-screen`` command:
 
 .. code:: shell
 
@@ -65,7 +67,7 @@ Configurations
 
 ``$ grab-screen config list`` - show configs.
 
-``$ grab-screen config set NAME [VALUE]`` - set an option. You can add
+``$ grab-screen config set NAME VALUE`` - set an option. You can add
 ``--upset`` to remove the option.
 
 ``$ grab-screen config reset`` - remove all options.
@@ -73,15 +75,12 @@ Configurations
 Taking screenshots
 ^^^^^^^^^^^^^^^^^^
 
-``$ grab-screen image`` - take a screenshot.
-
-Use ``-h``/``--help`` to see more options.
+``$ grab-screen image`` - take a screenshot. Use ``-h``/``--help`` to see more options.
 
 Storages
 --------
 
-**CloudApp**
-
+* CloudApp
     Before uploading screenshots to CloudApp, provider your credentials:
 
     .. code:: shell
