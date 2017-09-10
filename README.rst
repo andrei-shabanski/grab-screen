@@ -4,6 +4,18 @@ Grab Screen
 .. list-table::
    :stub-columns: 1
 
+   * - Package
+     - .. image:: https://img.shields.io/pypi/v/grab-screen.svg
+            :target: https://pypi.python.org/pypi/grab-screen
+       .. image:: https://img.shields.io/pypi/pyversions/grab-screen.svg
+            :target: https://pypi.python.org/pypi/grab-screen
+       .. image:: https://img.shields.io/pypi/l/grab-screen.svg
+            :target: https://github.com/andrei-shabanski/grab-screen/blob/master/LICENSE
+   * - Build
+     - .. image:: https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master
+            :target: https://travis-ci.org/andrei-shabanski/grab-screen
+       .. image:: https://coveralls.io/repos/github/andrei-shabanski/grab-screen/badge.svg?branch=master
+            :target: https://coveralls.io/github/andrei-shabanski/grab-screen?branch=master
    * - Code quality
      - .. image:: https://api.codacy.com/project/badge/Grade/0f2d7aaac9684b728fd45fbab2fbca3b
             :target: https://www.codacy.com/app/andrei-shabanski/grab-screen?utm_source=github.com&utm_medium=referral&utm_content=andrei-shabanski/grab-screen&utm_campaign=badger
@@ -15,23 +27,11 @@ Grab Screen
             :target: https://codeclimate.com/github/andrei-shabanski/grab-screen
        .. image:: https://codeclimate.com/github/andrei-shabanski/grab-screen/badges/issue_count.svg
             :target: https://codeclimate.com/github/andrei-shabanski/grab-screen
-   * - Build
-     - .. image:: https://travis-ci.org/andrei-shabanski/grab-screen.svg?branch=master
-            :target: https://travis-ci.org/andrei-shabanski/grab-screen
-       .. image:: https://coveralls.io/repos/github/andrei-shabanski/grab-screen/badge.svg?branch=master
-            :target: https://coveralls.io/github/andrei-shabanski/grab-screen?branch=master
    * - Dependencies
      - .. image:: https://pyup.io/repos/github/andrei-shabanski/grab-screen/shield.svg
              :target: https://pyup.io/repos/github/andrei-shabanski/grab-screen
        .. image:: https://requires.io/github/andrei-shabanski/grab-screen/requirements.svg?branch=master
             :target: https://requires.io/github/andrei-shabanski/grab-screen/requirements/?branch=master
-   * - Package
-     - .. image:: https://img.shields.io/pypi/v/grab-screen.svg
-            :target: https://pypi.python.org/pypi/grab-screen
-       .. image:: https://img.shields.io/pypi/pyversions/grab-screen.svg
-            :target: https://pypi.python.org/pypi/grab-screen
-       .. image:: https://img.shields.io/pypi/l/grab-screen.svg
-            :target: https://github.com/andrei-shabanski/grab-screen/blob/master/LICENSE
 
 Take screenshots and upload anywhere!
 
