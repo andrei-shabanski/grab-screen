@@ -8,7 +8,9 @@ python:
   - "nightly"
 install:
   - pip install -e .[dev]
+before_script:
+  - make codeclime-install codeclime-pre-build
 script:
   - make lint test
 after_success:
-  - make codacy coveralls codecov
+  - make codacy coveralls codecov codeclime
