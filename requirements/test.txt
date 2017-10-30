@@ -11,10 +11,10 @@ coveralls==1.2.0
 
 # linters
 bandit==1.4.0
-flake8==3.4.1
+flake8==3.5.0
 flake8-colors==0.1.6
 flake8-deprecated==1.2.1
-flake8-import-order==0.13
+flake8-import-order==0.14.1
 flake8-mutable==1.2.0
 flake8-print==2.0.2
 pep8-naming==0.4.1
