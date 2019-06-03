@@ -10,7 +10,7 @@ coverage==4.5.3
 coveralls==1.8.0
 
 # linters
-bandit==1.5.1
+bandit==1.6.0
 flake8==3.6.0
 flake8-colors==0.1.6
 flake8-deprecated==1.3
