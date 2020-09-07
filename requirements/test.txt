@@ -7,7 +7,7 @@ tox==3.20.0
 codacy-coverage==1.3.11
 codecov==2.1.9
 coverage==5.2.1
-coveralls==1.5.1
+coveralls==2.1.2
 
 # linters
 bandit==1.5.1
