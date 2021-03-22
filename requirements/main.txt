@@ -1,4 +1,4 @@
 click==7.1.2
 mss==6.1.0
-pyperclip==1.7.0
+pyperclip==1.8.2
 requests==2.20.1
